@@ -10,17 +10,28 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="40dp"
-      android:orientation="horizontal"
-      android:background="@color/main_color">
+      android:background="@color/main_color"
+      android:orientation="horizontal">
 
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/main_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/main_color"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+
+    <RelativeLayout
+        android:id="@+id/search_btn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+      <ImageView
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          android:layout_centerInParent="true"
+          android:src="@mipmap/search_icon" />
+    </RelativeLayout>
+
   </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager

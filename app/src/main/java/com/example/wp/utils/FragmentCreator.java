@@ -16,12 +16,12 @@ public class FragmentCreator {
     public final static int INDEX_RECOMMEND = 0;
     public final static int INDEX_SUBSCRIPTION = 1;
     public final static int INDEX_HISTORY = 2;
-    public final static int INDEX_MUSIC = 3;
-    public final static int INDEX_XIAOSHUO = 4;
-    public final static int INDEX_ACCOUNT= 5;
+//    public final static int INDEX_MUSIC = 3;
+//    public final static int INDEX_XIAOSHUO = 4;
+//    public final static int INDEX_ACCOUNT= 5;
 
 
-    public final static int PAGE_COUNT = 6;
+    public final static int PAGE_COUNT = 3;
 
     private static Map<Integer, BaseFragment> sCache = new HashMap<>();
 
@@ -42,15 +42,15 @@ public class FragmentCreator {
             case INDEX_HISTORY:
                 baseFragment = new HistoryFragment();
                 break;
-            case INDEX_MUSIC:
-                baseFragment = new MusicFragment();
-                break;
-            case INDEX_XIAOSHUO:
-                baseFragment = new XiaoshuoFragment();
-                break;
-            case INDEX_ACCOUNT:
-                baseFragment = new AccountFragment();
-                break;
+//            case INDEX_MUSIC:
+//                baseFragment = new MusicFragment();
+//                break;
+//            case INDEX_XIAOSHUO:
+//                baseFragment = new XiaoshuoFragment();
+//                break;
+//            case INDEX_ACCOUNT:
+//                baseFragment = new AccountFragment();
+//                break;
         }
 
         sCache.put(index, baseFragment);

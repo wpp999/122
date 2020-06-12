@@ -5,8 +5,8 @@
         <item>推荐</item>
         <item>订阅</item>
         <item>历史</item>
-        <item>音乐</item>
-        <item>小说</item>
-        <item>账号</item>
+<!--        <item>音乐</item>-->
+<!--        <item>小说</item>-->
+<!--        <item>账号</item>-->
     </string-array>
 </resources>
