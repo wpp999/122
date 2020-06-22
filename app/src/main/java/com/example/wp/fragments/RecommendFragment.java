@@ -1,5 +1,6 @@
 package com.example.wp.fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,27 +11,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wp.R;
+import com.example.wp.activity.DetailActivity;
 import com.example.wp.adapters.RecommendListAdapter;
 import com.example.wp.base.BaseFragment;
 import com.example.wp.interfaces.IRecommendViewCallback;
+import com.example.wp.presenters.AlbumDetailPresenter;
 import com.example.wp.presenters.RecommendPresenter;
-import com.example.wp.utils.Constants;
-import com.example.wp.utils.LogUtil;
 import com.example.wp.views.UILoader;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
-import com.ximalaya.ting.android.opensdk.util.IDbDataCallBack;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallback,UILoader.OnRetryClickListener {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback,UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListener {
 
 
     private static final String TAG = "RecommendFragment";
@@ -87,6 +81,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         //3.设置适配器
         mRecommendListAdapter=new RecommendListAdapter();
         mRecommendRv.setAdapter(mRecommendListAdapter);
+        mRecommendListAdapter.setOnRecommendItemClickListener(this);
         return mRootView;
     }
 
@@ -143,5 +138,14 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         if (mRecommendPresenter!=null) {
             mRecommendPresenter.getRecommendList();
         }
+    }
+
+    @Override
+    public void OnItemClick(int position,Album album) {
+        //根据位置获取数据
+        AlbumDetailPresenter.getInstance().setTargetAlbum(album);
+        //item被点击了，跳转页面
+        Intent intent=new Intent(getContext(), DetailActivity.class);
+        startActivity(intent);
     }
 }

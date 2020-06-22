@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+   <ImageView
+       android:id="@+id/cover_bg"
+       android:layout_width="match_parent"
+       android:layout_height="150dp"
+       android:scaleType="fitXY"
+       android:background="#EDF4D8AE"/>
+    <com.example.wp.views.RoundRectImageView
+        android:id="@+id/small_cover"
+        android:layout_height="75dp"
+        android:layout_width="75dp"
+        android:layout_below="@+id/cover_bg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-40dp"
+        android:scaleType="fitXY"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cover_bg"
+        android:layout_toRightOf="@id/small_cover"
+        android:layout_marginTop="-30dp"
+        android:layout_marginLeft="20dp">
+
+
+
+        <TextView
+            android:id="@+id/album_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:text="专辑标题"/>
+        <TextView
+            android:id="@+id/album_author_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:text="专辑标题"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+</RelativeLayout>
