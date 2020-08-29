@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.wp.R;
 import com.example.wp.base.BaseApplication;
@@ -93,11 +92,11 @@ public  abstract class UILoader extends FrameLayout {
         mEmptyView.setVisibility(mCurrentStatus == UIStatus.EMPTY ? VISIBLE : GONE);
     }
 
-    private View getEmptyView() {
+    protected View getEmptyView() {
         return LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view, this, false);
     }
 
-    private View getNetworkErrorView() {
+    protected View getNetworkErrorView() {
         View networkErrorView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view, this, false);
         networkErrorView.findViewById(R.id.network_error_icon).setOnClickListener(new OnClickListener() {
             @Override

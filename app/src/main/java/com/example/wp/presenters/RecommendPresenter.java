@@ -1,5 +1,6 @@
 package com.example.wp.presenters;
 
+import com.example.wp.data.XimalayApi;
 import com.example.wp.interfaces.IRecommendPresenter;
 import com.example.wp.interfaces.IRecommendViewCallback;
 import com.example.wp.utils.Constants;
@@ -19,6 +20,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     private static final String TAG ="RecommendPresenter";
     private List<IRecommendViewCallback> mCallback =new ArrayList<>();
+    private List<Album> mCurrentRecommend = null;
 
     private RecommendPresenter() {
     }
@@ -38,18 +40,25 @@ public class RecommendPresenter implements IRecommendPresenter {
     }
       return sInstance;
 }
+
+    /**
+     * 获取当前推进专辑列表
+     * @return 使用时要判空
+     */
+  public List<Album> getCurrentRecommend(){
+        return  mCurrentRecommend;
+  }
     /*
       获取推荐内容 ，猜你喜欢
        */
     @Override
     public void getRecommendList() {
-    //获取推荐内容
+        //获取推荐内容
         //封装参数
         upDataLoading();
-        Map<String,String> map=new HashMap<>();
-        //返回多少条
-        map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMEND_COUNT+"");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
+
+        XimalayApi ximalayApi = XimalayApi.getXimalayApi();
+        ximalayApi.getRecommendList(new IDataCallBack<GussLikeAlbumList>() {
 
 
             @Override
@@ -72,6 +81,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
             }
         });
+
     }
     private void handlerError() {
         if (mCallback != null) {
@@ -95,6 +105,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
                         callback.onRecommendListLoad(albumList);
                     }
+                    this.mCurrentRecommend = albumList;
                 }
             }
         }
@@ -125,7 +136,7 @@ public class RecommendPresenter implements IRecommendPresenter {
     @Override
     public void unRegisterViewCallback(IRecommendViewCallback callback) {
     if (mCallback!=null){
-        mCallback.remove(mCallback);
+        mCallback.remove(callback);
     }
     }
 }

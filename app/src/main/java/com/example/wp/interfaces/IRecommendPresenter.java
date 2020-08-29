@@ -1,6 +1,8 @@
 package com.example.wp.interfaces;
 
-public interface IRecommendPresenter  {
+import com.example.wp.base.IBasePresenter;
+
+public interface IRecommendPresenter  extends IBasePresenter<IRecommendViewCallback> {
     /*
     *获取推荐内容
      */
@@ -12,13 +14,7 @@ public interface IRecommendPresenter  {
     /*
     *上拉加载更多
      */
+
     void loadMore();
-    /*
-    *用于注册UI的回调
-     */
-    void registerViewCallback(IRecommendViewCallback callback);
-    /*
-    *取消UI的注册回调
-     */
-    void unRegisterViewCallback(IRecommendViewCallback callback);
+
 }

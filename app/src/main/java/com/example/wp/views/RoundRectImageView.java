@@ -2,14 +2,11 @@ package com.example.wp.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageView;
-
-import android.graphics.Path;
-
-import com.example.wp.utils.Constants;
 
 public class RoundRectImageView extends AppCompatImageView {
     private float roundRatio=0.1f;

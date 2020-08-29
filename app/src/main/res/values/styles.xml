@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/main_color</item>
     </style>
 
+    <style name="pop_animation" parent="android:Animation" >
+        <item name="android:windowEnterAnimation">@anim/pop_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_out</item>
+    </style>
+
+    <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
+
 </resources>
+
+

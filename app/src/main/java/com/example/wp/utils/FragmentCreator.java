@@ -1,12 +1,9 @@
 package com.example.wp.utils;
 
 import com.example.wp.base.BaseFragment;
-import com.example.wp.fragments.AccountFragment;
 import com.example.wp.fragments.HistoryFragment;
-import com.example.wp.fragments.MusicFragment;
 import com.example.wp.fragments.RecommendFragment;
 import com.example.wp.fragments.SubscriptionFragment;
-import com.example.wp.fragments.XiaoshuoFragment;
 
 import java.util.HashMap;
 import java.util.Map;

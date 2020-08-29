@@ -1,23 +1,38 @@
 package com.example.wp.base;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 
+import com.example.wp.MainActivity;
+import com.example.wp.MyPlayerReceiver;
 import com.example.wp.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
+import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater;
+import com.ximalaya.ting.android.opensdk.player.service.XmPlayerConfig;
+import com.ximalaya.ting.android.opensdk.util.BaseUtil;
+
+
 
 
 public class BaseApplication extends Application {
     private static Handler sHandler =null;
-
+    private static Context sContext = null;
+    private XmPlayerManager mPlayerManager;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        boolean isRelease = false;
         CommonRequest mXimalaya = CommonRequest.getInstanse();
+
+
         if (DTransferConstants.isRelease) {
             String mAppSecret = "8646d66d6abe2efd14f2891f9fd1c8af";
             mXimalaya.setAppkey("9f9ef8f10bebeaa83e71e62f935bede8");
@@ -29,11 +44,21 @@ public class BaseApplication extends Application {
             mXimalaya.setPackid("com.ximalaya.qunfeng");
             mXimalaya.init(this, mAppSecret);
         }
+        //初始化播放器
+        XmPlayerManager.getInstance(this).init();
         //初始化LogUtil
         LogUtil.init(this.getPackageName(), false);
         sHandler=new Handler();
 
+        sContext = getBaseContext();
 
+
+
+
+
+    }
+    public static Context getAppContext(){
+        return  sContext;
     }
     public static Handler getsHandler(){
         return sHandler;

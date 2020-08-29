@@ -1,6 +1,8 @@
 package com.example.wp.interfaces;
 
-public interface IAlbumDetailPresenter {
+import com.example.wp.base.IBasePresenter;
+
+public interface IAlbumDetailPresenter extends IBasePresenter<IAlbumDetailViewCallback> {
 
     /*
      *下拉刷新内容
@@ -17,18 +19,8 @@ public interface IAlbumDetailPresenter {
      * @param page
      */
 
-    void getAlbumDetail(int albumId,int page);
+    void getAlbumDetail(int albumId, int page);
 
-    /**
-     * 注册UI通知接口
-     * @param detailViewCallback
-     */
-    void registerViewCallback(IAlbumDetailViewCallback detailViewCallback);
-    /**
-     * 删除UI通知接口
-     * @param detailViewCallback
-     */
-    void unregisterViewCallback(IAlbumDetailViewCallback detailViewCallback);
 
 
 

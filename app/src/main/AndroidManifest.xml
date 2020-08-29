@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.wp">
     <!--连接网络-->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,6 +14,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--target >=28 需要设置此权限 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -22,16 +24,57 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetailActivity">
-
+        <activity android:name=".activity.DetailActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activity.PlayerActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
         </activity>
+
+        <service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
+        android:process=":player"/>
+
+
+        <receiver
+            android:name="com.ximalaya.ting.android.opensdk.player.receive.PlayerReceiver" android:exported="true" android:process=":player">
+            <intent-filter>
+                <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_START_PAUSE" />
+                <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE" />
+                <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT" />
+                <action android:name="com.ximalaya.ting.android.ACTION_CLOSE" />
+                <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_RELEASE_SERVICE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.ximalaya.ting.android.opensdk.player.receive.WireControlReceiver"
+            android:process=":player"
+            android:exported="true" />
+        <receiver android:name=".MyPlayerReceiver" android:exported="true" android:process=":player">
+
+            <intent-filter>
+
+                <action android:name="com.app.test.android.Action_Close"/>
+                <action android:name="com.app.test.android.Action_PAUSE_START"/>
+
+            </intent-filter>
+
+        </receiver>
+
+        <receiver android:name=".CustomMediaButtonReceiver"/>
+
     </application>
 
 </manifest>

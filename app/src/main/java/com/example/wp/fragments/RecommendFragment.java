@@ -12,25 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wp.R;
 import com.example.wp.activity.DetailActivity;
-import com.example.wp.adapters.RecommendListAdapter;
+import com.example.wp.adapters.AlbumListAdapter;
 import com.example.wp.base.BaseFragment;
 import com.example.wp.interfaces.IRecommendViewCallback;
 import com.example.wp.presenters.AlbumDetailPresenter;
 import com.example.wp.presenters.RecommendPresenter;
 import com.example.wp.views.UILoader;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
 import java.util.List;
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallback,UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListener {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback,UILoader.OnRetryClickListener, AlbumListAdapter.OnAlbumItemClickListener {
 
 
     private static final String TAG = "RecommendFragment";
     private  RecyclerView mRecommendRv;
     private  View mRootView;
-    private RecommendListAdapter mRecommendListAdapter;
+    private AlbumListAdapter mRecommendListAdapter;
     private RecommendPresenter mRecommendPresenter;
     private UILoader mUiLoader;
     @Override
@@ -64,6 +65,8 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         mRootView = layoutInflater.inflate(R.layout.fragment_recommend,container,false);
         //1.找到控件
         mRecommendRv = mRootView.findViewById(R.id.recommend_list);
+        TwinklingRefreshLayout twinklingRefreshLayout = mRootView.findViewById(R.id.over_scroll_view);
+        twinklingRefreshLayout.setPureScrollModeOn();
         //2.设置布局管理器
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -71,17 +74,17 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         mRecommendRv.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.top= UIUtil.dip2px(view.getContext(),5);
+                outRect.top= UIUtil.dip2px(view.getContext(),3);
                 outRect.left=UIUtil.dip2px(view.getContext(),5);
-                outRect.bottom=UIUtil.dip2px(view.getContext(),5);
+                outRect.bottom=UIUtil.dip2px(view.getContext(),3);
                 outRect.right=UIUtil.dip2px(view.getContext(),5);
 
             }
         });
         //3.设置适配器
-        mRecommendListAdapter=new RecommendListAdapter();
+        mRecommendListAdapter=new AlbumListAdapter();
         mRecommendRv.setAdapter(mRecommendListAdapter);
-        mRecommendListAdapter.setOnRecommendItemClickListener(this);
+        mRecommendListAdapter.setAlbumItemClickListener(this);
         return mRootView;
     }
 
@@ -141,7 +144,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     }
 
     @Override
-    public void OnItemClick(int position,Album album) {
+    public void OnItemClick(int position, Album album) {
         //根据位置获取数据
         AlbumDetailPresenter.getInstance().setTargetAlbum(album);
         //item被点击了，跳转页面

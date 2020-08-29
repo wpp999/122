@@ -1,5 +1,6 @@
 package com.example.wp.adapters;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,12 @@ import com.ximalaya.ting.android.opensdk.model.album.Album;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder> {
+public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.InnerHolder> {
 
     private static final String TAG = "RecommendListAdapter";
     private List<Album> mData=new ArrayList<>();
-    private OnRecommendItemClickListener mItemClickListener=null;
+    private OnAlbumItemClickListener mItemClickListener=null;
+    private OnAlbumItemLongClickListener mLongClickListener = null;
 
 
     @NonNull
@@ -47,6 +49,22 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             }
         });
         holder.setData(mData.get(position));
+
+
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mLongClickListener != null) {
+                    int clickPosition =(int) v.getTag();
+                mLongClickListener.onItemLongClick(mData.get(clickPosition));
+
+                }
+                //ture表示消费掉该事件
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -65,6 +83,8 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         //更新一下UI
         notifyDataSetChanged();
     }
+
+
 
     public class InnerHolder extends RecyclerView.ViewHolder {
         public InnerHolder(@NonNull View itemView) {
@@ -89,17 +109,35 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             albumPlayCountTv.setText(album.getPlayCount() + "");
             albumContentCountTv.setText(album.getIncludeTrackCount() + "");
 
+            String coverUrlLarge = album.getCoverUrlLarge();
+            if (!TextUtils.isEmpty(coverUrlLarge)) {
 
-            Picasso.with(itemView.getContext()).load(album.getCoverUrlLarge()).into(albumCoverIv);
+            Picasso.with(itemView.getContext()).load(coverUrlLarge).into(albumCoverIv);
+            } else {
+                albumCoverIv.setImageResource(R.mipmap.ximalay_logo);
+
+            }
+
         }
     }
 
-    public void setOnRecommendItemClickListener(OnRecommendItemClickListener listener){
+    public void setAlbumItemClickListener(OnAlbumItemClickListener listener){
         this.mItemClickListener =listener;
 
     }
 
-    public interface OnRecommendItemClickListener{
-        void  OnItemClick(int position,Album album);
+    public interface OnAlbumItemClickListener {
+        void  OnItemClick(int position, Album album);
     }
+    public void setOnAlbumItemLongClickListener(OnAlbumItemLongClickListener listener) {
+        this.mLongClickListener = listener;
+    }
+
+    /**
+     * item长按的接口
+     */
+    public interface OnAlbumItemLongClickListener {
+        void onItemLongClick(Album album);
+    }
+
 }
